@@ -3,7 +3,7 @@
 print("[INFO]: importing Libraries")
 from os import sep as separator
 from imutils.paths import list_images
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelBinarizer
 import argparse
 import numpy as np
 
@@ -47,7 +47,7 @@ sdl = Simple_Dataset_Loader(preprocessors=[IAp, Ip])
 
 # setting up encoder
 label = [i.split(separator)[-2] for i in dataset_path]
-le = LabelEncoder().fit(label)
+le = LabelBinarizer().fit(label)
 
 # store un-encoded classname/label
 db.store_class_labels(le.classes_)
