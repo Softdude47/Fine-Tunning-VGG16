@@ -29,7 +29,7 @@ image_dimension = list(args["dimension"])
 # setting up database
 print("[INFO]: setting up database")
 dataset_path = list(list_images(dataset))
-dimension = [len(dataset_path), 1]
+dimension = [len(dataset_path),]
 dimension.extend(image_dimension)
 dimension.append(3)
 print(dimension)
