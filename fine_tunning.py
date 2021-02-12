@@ -17,7 +17,7 @@ ap.add_argument("--train_size", "-train", help="decimal value specifying train d
 ap.add_argument("--input_path", "-input", help="path(filename included) dataset", type=str, required=True)
 ap.add_argument("--learning_rate", "-lr", help="learn rate optimizer", type=int, default=0.0001)
 ap.add_argument("--classes", "-c", help="number of classes", type=int, default=17)
-ap.add_argument("--eppochs", "-e", help="number of epochs", type=int, default=32)
+ap.add_argument("--epochs", "-e", help="number of epochs", type=int, default=32)
 args = vars(ap.parse_args())
 
 
@@ -45,7 +45,7 @@ print("[INFO]: loading pre-trained model")
 base_model = VGG16(
     weights="imagenet",
     include_top=False,
-    input_shape=Input(shape=(224,224,3))
+    input_tensor=Input(shape=(224,224,3))
 )
 
 # creates another model by attaching new head to the pre-trained model
