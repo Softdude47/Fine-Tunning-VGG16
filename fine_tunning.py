@@ -15,14 +15,16 @@ ap = ArgumentParser()
 ap.add_argument("--output_path", "-output", help="path(filename included) to save fine tunned model", type=str, default="./model.h5")
 ap.add_argument("--train_size", "-train", help="decimal value specifying train data percentage", type=int, default=0.8)
 ap.add_argument("--input_path", "-input", help="path(filename included) dataset", type=str, required=True)
+ap.add_argument("--batch_size", "-bs", help="batch size of training", type=int, default=32)
 ap.add_argument("--learning_rate", "-lr", help="learn rate optimizer", type=int, default=0.0001)
 ap.add_argument("--classes", "-c", help="number of classes", type=int, default=17)
-ap.add_argument("--eppochs", "-e", help="number of epochs", type=int, default=32)
+ap.add_argument("--epochs", "-e", help="number of epochs", type=int, default=32)
 args = vars(ap.parse_args())
 
 
 epochs = args["epochs"]
 classes = args["classes"]
+batch_size = args["batch_size"]
 model_path = args["output_path"]
 dataset_path = args["input_path"]
 learning_rate = args["learning_rate"]
@@ -45,7 +47,7 @@ print("[INFO]: loading pre-trained model")
 base_model = VGG16(
     weights="imagenet",
     include_top=False,
-    input_shape=Input(shape=(224,224,3))
+    input_tensor=Input(shape=(224,224,3))
 )
 
 # creates another model by attaching new head to the pre-trained model
@@ -68,6 +70,6 @@ model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["ac
 print("[INFO]: warming up fully connected layers")
 gen = Augment.preprocessor()
 model.fit_generator(gen.flow(
-    x=x_train, y=y_train, batch_size=32
+    x=x_train, y=y_train, batch_size=batch_size
     ), steps_per_epoch=len(x_train)//epochs, epochs=epochs, validation_data=(x_test, y_test)
 )

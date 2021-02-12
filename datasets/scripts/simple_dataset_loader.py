@@ -9,7 +9,7 @@ class Simple_Dataset_Loader:
         if self.preprocessors is None:
             self.preprocessors = []
             
-    def preprocess(self, img_path: str, target_size=None, include_labels : bool = True)-> list or tuple:
+    def preprocess(self, img_path: str, target_size=None, include_labels : bool = True, expand_dim=False)-> list or tuple:
         """ preprocess the images with the Procoessors """
         loaded_img = []
         
@@ -23,7 +23,8 @@ class Simple_Dataset_Loader:
                 image = preprocessor.preprocess(image)
                 
             # append the preprocess image to the list
-            image = expand_dims(image, axis=0)
+            if expand_dim is True:
+                image = expand_dims(image, axis=0)
             loaded_img.append(image)
         
         # get the image labels if the "include_labels" parameter is set to true
