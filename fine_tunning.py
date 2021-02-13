@@ -5,9 +5,9 @@ from conv.FCNet import FCNet
 
 
 from argparse import ArgumentParser
-from keras.optimizers import RMSprop
-from keras.applications import VGG16
-from keras import Model, Input
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras import Model, Input
 from h5py import File
 
 # commandline arguments
