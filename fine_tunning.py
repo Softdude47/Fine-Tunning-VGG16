@@ -73,3 +73,6 @@ model.fit_generator(gen.flow(
     x=x_train, y=y_train, batch_size=batch_size
     ), steps_per_epoch=len(x_train)//epochs, epochs=epochs, validation_data=(x_test, y_test)
 )
+
+# save model
+model.save(model_path)
