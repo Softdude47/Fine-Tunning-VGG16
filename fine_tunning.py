@@ -5,9 +5,9 @@ from conv.FCNet import FCNet
 
 
 from argparse import ArgumentParser
-from keras.optimizers import RMSprop
-from keras.applications import VGG16
-from keras import Model, Input
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.applications import VGG16
+from tensorflow.keras import Model, Input
 from h5py import File
 
 # commandline arguments
@@ -73,3 +73,6 @@ model.fit_generator(gen.flow(
     x=x_train, y=y_train, batch_size=batch_size
     ), steps_per_epoch=len(x_train)//epochs, epochs=epochs, validation_data=(x_test, y_test)
 )
+
+# save model
+model.save(model_path)

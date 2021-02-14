@@ -20,7 +20,18 @@
   * --input_path[_required_]: path to cached/preprocessed dataset
   * --output_path[_optional_] : full path(filename includede) to save the train model
   * --epochs[_optional_]: number of training epochs
-  * --classes[_optional_] : number of classes in dataset
+  * --train_size[_optional_] : fraction of dataset to be used to training
+  * --learning_rate[_optional_] : learning rate of optimizer used in training model
+  * --batch_size[_optional_] : number of feature and label samples to train model per each steps
+
+### re_train.py
+
+* info:
+  * loads the fine tunned model and retrains it
+* arguments:
+  * --input_path[_required_]: path to the existing model
+  * --output_path[_optional_] : full path(filename includede) to save the re-trained model
+  * --epochs[_optional_]: number of training epochs
   * --train_size[_optional_] : fraction of dataset to be used to training
   * --learning_rate[_optional_] : learning rate of optimizer used in training model
   * --batch_size[_optional_] : number of feature and label samples to train model per each steps

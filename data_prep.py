@@ -17,7 +17,7 @@ print("[INFO]: setting up commandline args")
 ap = argparse.ArgumentParser()
 ap.add_argument("--input_path", "-input", help="full directory path to dataset", type=str, required=True)
 ap.add_argument("--output_path", "-output", help="full directory path to store cache file", type=str, default="./db.h5")
-ap.add_argument("--dimension", "-dim", help="dimension(M, N) of data to be cacheed", nargs="+", type=int, default=[224, 224])
+ap.add_argument("--dimension", "-dim", help="dimension(M, N) of data to be cached", nargs="+", type=int, default=[224, 224])
 ap.add_argument("--batch_size", "-bs", help="batches of data to be cached per step", type=int, default=32)
 args = vars(ap.parse_args())
 
@@ -29,14 +29,17 @@ image_dimension = list(args["dimension"])
 # setting up database
 print("[INFO]: setting up database")
 dataset_path = list(list_images(dataset))
+label = [i.split(separator)[-2] or i.split("/") for i in dataset_path]
+
 dimension = [len(dataset_path),]
 dimension.extend(image_dimension)
 dimension.append(3)
-print(dimension)
+
 db = File_Database(
     output_path=output_path,
     buffSize=80,
-    dimension = dimension
+    dimension = dimension,
+    numOfClasses=len(np.unique(label))
 )
 
 # preprocessors
@@ -46,7 +49,6 @@ Ip = Imagenet()
 sdl = Simple_Dataset_Loader(preprocessors=[IAp, Ip])
 
 # setting up encoder
-label = [i.split(separator)[-2] for i in dataset_path]
 le = LabelBinarizer().fit(label)
 
 # store un-encoded classname/label

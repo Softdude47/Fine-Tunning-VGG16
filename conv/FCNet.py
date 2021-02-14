@@ -1,4 +1,4 @@
-from keras.layers.core import Dense, Dropout, Flatten
+from tensorflow.keras.layers.core import Dense, Dropout, Flatten
 
 class FCNet:
     @staticmethod
