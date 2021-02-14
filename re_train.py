@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from keras.models import load_model
 from keras.optimizers import SGD
 from h5py import File
-from numpy import arange
+from numpy import arange, unique
 
 
 # commandline arguments
@@ -19,13 +19,11 @@ ap.add_argument("--train_size", "-train", help="decimal value specifying train d
 ap.add_argument("--input_path", "-input", help="path(filename included) dataset", type=str, required=True)
 ap.add_argument("--batch_size", "-bs", help="batch size of training", type=int, default=32)
 ap.add_argument("--learning_rate", "-lr", help="learn rate optimizer", type=int, default=0.0001)
-ap.add_argument("--classes", "-c", help="number of classes", type=int, default=17)
 ap.add_argument("--epochs", "-e", help="number of epochs", type=int, default=32)
 args = vars(ap.parse_args())
 
 
 epochs = args["epochs"]
-classes = args["classes"]
 batch_size = args["batch_size"]
 model_path = args["model_path"]
 dataset_path = args["input_path"]
@@ -35,6 +33,7 @@ learning_rate = args["learning_rate"]
 print("[INFO]: loading dataset")
 db = File(dataset_path, mode="r")
 idx = int(len(db["features"]) * args["train_size"])
+class_names = db["class_names"]
 
 # split dataset
 print("[INFO]: splitting dataset")
@@ -73,7 +72,7 @@ history = model.fit_generator(
 
 # getting model classification ability info
 pred = model.predict(x_test, batch_size=batch_size)
-report = classification_report(y_true = y_test, y_pred = pred.argmax(axis=1))
+report = classification_report(y_true = y_test.argmax(axis=1), y_pred = pred.argmax(axis=1), target_names=class_names)
 print(report)
 
 print("[INFO]: plotting model history")

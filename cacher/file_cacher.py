@@ -1,19 +1,23 @@
 import h5py
 
 class File_Database:
-    def __init__(self, output_path: str = ".", buffSize: int = 1000, dimension: tuple or list = [])->None:
+    def __init__(self, output_path: str = ".", buffSize: int = 1000, dimension: tuple or list = [], numOfClasses : int = None)->None:
         """
-        output_path [str]: output path of the cached dataset,
-        buffSize [int]: size of temporary storage,
-        dimension [tuple | list]: dimension of cached datasets,
+        output_path: output path of the cached dataset,
+        buffSize: size of temporary storage,
+        dimension: dimension of cached datasets,
+        numOfClasses: shape of the label, useful when encoding labels with LabelBinarizer
         """
         
         # creates the database file
         self.db = h5py.File(name=output_path, mode="w")
         
+        # dynamic label shape/dimension
+        l_size = (dimension[0], numOfClasses) or (dimension[0],)
+        
         # create "features" and "labels" datasets
         self.data = self.db.create_dataset(name="features", shape=dimension, dtype="float")
-        self.label = self.db.create_dataset(name="labels", shape=(dimension[0],), dtype="int")
+        self.label = self.db.create_dataset(name="labels", shape=l_size, dtype="int")
         
         # create buffer
         self.buffer = {"data": [], "label": []}
