@@ -13,10 +13,10 @@ from h5py import File
 # commandline arguments
 ap = ArgumentParser()
 ap.add_argument("--output_path", "-output", help="path(filename included) to save fine tunned model", type=str, default="./model.h5")
-ap.add_argument("--train_size", "-train", help="decimal value specifying train data percentage", type=int, default=0.8)
+ap.add_argument("--train_size", "-train", help="decimal value specifying train data percentage", type=float, default=0.8)
 ap.add_argument("--input_path", "-input", help="path(filename included) dataset", type=str, required=True)
 ap.add_argument("--batch_size", "-bs", help="batch size of training", type=int, default=32)
-ap.add_argument("--learning_rate", "-lr", help="learn rate optimizer", type=int, default=0.0001)
+ap.add_argument("--learning_rate", "-lr", help="learn rate optimizer", type=float, default=0.0001)
 ap.add_argument("--classes", "-c", help="number of classes", type=int, default=17)
 ap.add_argument("--epochs", "-e", help="number of epochs", type=int, default=32)
 args = vars(ap.parse_args())
