@@ -40,6 +40,7 @@ y_train = db["labels"][ : idx]
 x_test= db["features"][idx : ]
 y_test= db["labels"][idx : ]
 
+db = None
 
 ''' Constructing Model '''
 # load pre-train model and cuts off the head(final layer)
